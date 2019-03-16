@@ -64,7 +64,7 @@ public class BatchConfiguration {
     @Bean
     public Step getMyJobStep() {
         return this.stepBuilderFactory.get("myJobStep")
-                .<String, DataValue>chunk(1)
+                .<String, DataValue>chunk(100)
                 .reader(this.getMyReader())
                 .processor(this.getMyProcessor())
                 .writer(this.getMyWriter())

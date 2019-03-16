@@ -8,6 +8,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 import java.util.concurrent.TimeoutException;
 
@@ -29,11 +31,21 @@ class FillSomeQueue {
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            String message = "timestamp: 23.02.2019 19:53:03, value: " +getRandomNumberInRange(180,184);
+            String message = "timestamp: "+getDate()+", value: " +getRandomNumberInRange(180,184);
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
             System.out.println(" [x] Sent '" + message + "'");
         }
     }
+
+    private static int i = 0;
+    private String getDate(){
+        Calendar calendar = Calendar.getInstance(); // this would default to now
+        calendar.add(Calendar.DAY_OF_MONTH, -getRandomNumberInRange(1,10000));
+        String result =  new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(calendar.getTime()).toString();
+        System.out.println(result);
+        return result;
+    }
+
     private static int getRandomNumberInRange(int min, int max) {
 
         if (min >= max) {
