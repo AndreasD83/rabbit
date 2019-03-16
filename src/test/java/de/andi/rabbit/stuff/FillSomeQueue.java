@@ -1,4 +1,4 @@
-package de.andi.rabbit.integration;
+package de.andi.rabbit.stuff;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ApplicationTest {
+class FillSomeQueue {
     private final static String QUEUE_NAME = "firstQueue";
 
     @BeforeEach
