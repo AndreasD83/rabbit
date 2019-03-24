@@ -1,11 +1,11 @@
 package de.andi.rabbit.configuration;
 
 import lombok.Data;
-
-
+import org.springframework.context.annotation.PropertySource;
 
 
 @Data
+@PropertySource("classpath:application.properties")
 public class InfluxConfiguration {
 
     private String dbName;
@@ -17,7 +17,7 @@ public class InfluxConfiguration {
     private String retentionPolicy;
 
     public InfluxConfiguration(){
-        this.dbName="ultrasonic_database";
+        this.dbName="ultrasonic_data";
         this.server="container";
         this.port=8086;
         this.user="sa";
