@@ -16,13 +16,13 @@ import java.util.concurrent.TimeoutException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FillSomeQueue {
-    private final static String QUEUE_NAME = "firstQueue";
+    private final static String QUEUE_NAME = "data_temp";
 
     @BeforeEach
     void setUp() {
     }
 
-    @RepeatedTest(value = 1000)
+    @RepeatedTest(value = 10000)
     void sendToAmqp() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("openhabianpi");

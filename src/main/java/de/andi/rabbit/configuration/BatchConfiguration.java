@@ -15,22 +15,33 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.amqp.AmqpItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.annotation.PropertySource;
+
+import javax.validation.constraints.NotNull;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 @EnableBatchProcessing
 public class BatchConfiguration {
-    public final static String queueName = "firstQueue";
+    private static final Logger LOGGER = LogManager.getLogger(BatchConfiguration.class.getName());
+
+    @Value("${rabbitmq.queueName}")
+    @NotNull
+    String queueName;
+
     @Autowired
     private ConnectionFactory rabbitConnectionFactory;
 
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
-
 
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
@@ -38,6 +49,7 @@ public class BatchConfiguration {
 
     @Bean
     public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
+        LOGGER.debug("importUserJob...");
         return jobBuilderFactory.get("importUserJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
@@ -51,6 +63,7 @@ public class BatchConfiguration {
     // ...the second argument means to make the queue 'durable'
     @Bean
     public Queue myQueue() {
+        LOGGER.debug("init queue: {}", queueName);
         return new Queue(queueName, false);
     }
     // this is necessary for operations with Spring AMQP
@@ -63,6 +76,7 @@ public class BatchConfiguration {
 
     @Bean
     public Step getMyJobStep() {
+        LOGGER.debug("getMyJobStep...");
         return this.stepBuilderFactory.get("myJobStep")
                 .<String, DataValue>chunk(100)
                 .reader(this.getMyReader())

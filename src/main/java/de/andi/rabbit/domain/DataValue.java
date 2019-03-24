@@ -11,10 +11,12 @@ public class DataValue {
 
     private Date timestamp;
     private Float value;
+    private Date writeTime;
 
     public DataValue(String item){
         this.timestamp = DataValue.parseDate(item.split("timestamp:")[1].split(",")[0].trim());
         this.value = Float.valueOf(item.split(",")[1].split(":")[1].trim());
+        this.writeTime = new Date();
     }
 
     public static Date parseDate(String date) {

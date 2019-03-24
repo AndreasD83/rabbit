@@ -19,7 +19,7 @@ public class InfluxGatewayImplTest {
     @Autowired
     private DatabaseRepository gateway;
 
-    @Test
+   // @Test
     public void write(){
         gateway.createDatabase();
         System.out.println("write...\n\n");
@@ -30,6 +30,6 @@ public class InfluxGatewayImplTest {
     @AfterEach
     public void tearDown() {
         System.out.println("tearDown...\n\n");
-       // gateway.deleteDatabase();
+        gateway.deleteDatabase();
     }
 }
