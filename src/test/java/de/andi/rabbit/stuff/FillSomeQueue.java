@@ -22,7 +22,7 @@ class FillSomeQueue {
     void setUp() {
     }
 
-    @RepeatedTest(value = 10000)
+    //@RepeatedTest(value = 10000)
     void sendToAmqp() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("openhabianpi");

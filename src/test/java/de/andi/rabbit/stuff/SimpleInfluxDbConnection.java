@@ -61,7 +61,7 @@ public class SimpleInfluxDbConnection {
         this.influx.close();
     }
 
-    @Test
+    //@Test
     void processBatchValue() throws Exception {
 
         //open connection...
