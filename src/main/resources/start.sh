@@ -1,0 +1,1 @@
+sudo java -jar rabbitmq-1.0.0-SNAPSHOT.jar --spring.config.location=application.properties&
