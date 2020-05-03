@@ -48,6 +48,10 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.1'
 }
 
+compileOnly {
+    extendsFrom annotationProcessor
+}
+
 bootJar {
     baseName = "rabbitmq"
     version = "1.0.0-SNAPSHOT"
